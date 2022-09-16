@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Game {
+  id        Int    @id @default(autoincrement())
+  title     String @db.VarChar(255)
+  bannerURL String @db.VarChar(300)
+  ads       Ad[]
+}
+
+model Ad {
+  id                Int      @id @default(autoincrement())
+  name              String   @db.VarChar(255)
+  yearsOfExperience Int
+  discord           String   @db.VarChar(100)
+  days              Day[]
+  hoursStart        Int
+  hoursEnd          Int
+  useVoiceChannel   Boolean
+  createdAt         DateTime @default(dbgenerated())
+  game              Game     @relation(fields: [gameId], references: [id])
+  gameId            Int
+}
+
+model Day {
+  ad   Ad  @relation(fields: [adId], references: [id])
+  adId Int
+  day  Int
+
+  @@id([adId, day])
+}

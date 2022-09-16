@@ -1,0 +1,8 @@
+.vscode
+mobile/.expo
+mobile/.expo-shared
+mobile/node_modules
+server/.env
+server/node_modules
+server/prisma/migrations
+web/node_modules
